@@ -12,7 +12,7 @@
                     <a class="nav-link" href="/hello">Anime</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/hello">Random</a>
+                    <router-link v-bind:to="'/title/'+rand" class="nav-link">Random</router-link>
                 </li>
             </ul>
         </div>
@@ -25,7 +25,9 @@
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" v-on:click="logout">Logout</a>
+
+                        <a type="submit" class="dropdown-item" href="/" v-on:click="logout">Logout</a>
+
                     </div>
                 </div>
                 <router-link v-else class="nav-link d-flex align-items-center" to="/login">Log in</router-link>
@@ -42,28 +44,33 @@
         data() {
             return {
                 username: '',
+                rand: ''
             }
         },
         methods: {
             logout() {
                 localStorage.token = ""
                 this.$router.push("/")
-            }
+            },
+
         },
         computed: {
             isUserLogged() {
                 return !!localStorage.token;
-            }
+            },
+
         },
         mounted() {
             if (localStorage.isAuthorized) {
                 api
                     .get("/auth/self")
                     .then(response => this.username = response.data.name,
-
                     )
                     .catch()
             }
+            api
+                .get("/content/random")
+                .then(response => this.rand = response.data.kinopoiskId)
         }
     }
 </script>

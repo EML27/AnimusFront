@@ -4,12 +4,15 @@
             <div class="col"></div>
             <div class="col-4 wrap-login100" style="background-color: white">
                 <div class="mb-3"><h3>We missed you!</h3></div>
-                <div class="mb-3 "> <!-- логиновая лабуда-->
+                <form id="loginForm"
+                      action="/"
+                      @submit="checkValidityAndLogIn"
+                      class="mb-3 needs-validation" novalidate> <!-- логиновая лабуда-->
                     <div class="input-group mb-3"><input type="email" class="form-control"
                                                          placeholder="Email"
                                                          v-model="email"/>
                         <div class="invalid-feedback">
-                            Incorrect username
+                            Incorrect email
                         </div>
                     </div>
                     <div class="input-group mb-3"><input type="password" class="form-control"
@@ -20,9 +23,9 @@
                         </div>
                     </div>
                     <div>
-                        <button class="btn btn-primary btn-block" v-on:click="login">Log in</button>
+                        <input type="submit" class="btn btn-primary btn-block" value="Login"/>
                     </div>
-                </div>
+                </form>
                 <span><a>Or, try to <router-link to="/register">Sign Up</router-link></a></span>
                 <div><a>Back to
                     <router-link to="/">Animus</router-link>
@@ -31,11 +34,13 @@
             </div>
             <div class="col"></div>
         </div>
+
     </div>
 </template>
 
 <script>
     import api from '../axios/api-config'
+
 
     export default {
         name: "LogIn",
@@ -47,6 +52,7 @@
             }
         },
         methods: {
+
             login() {
                 api
                     .post("/auth/signIn", {
@@ -60,6 +66,16 @@
                     .catch(e => {
                         console.log(e)
                     })
+            },
+
+            checkValidityAndLogIn(e) {
+                const form = document.getElementById("loginForm")
+                if (form.checkValidity() === false) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                this.login()
+                form.classList.add('was-validated');
             }
         }
     }

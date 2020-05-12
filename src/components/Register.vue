@@ -4,7 +4,7 @@
             <div class="col"></div>
             <div class="col-4 wrap-login100" style="background-color: white">
                 <div class="mb-3"><h3>Hello there!</h3></div>
-                <div class="mb-3 ">
+                <form id="logupForm" action="/" @submit="checkValidityAndLogUp" class="mb-3 needs-validation" novalidate>
                     <div class="input-group mb-3"><input type="text" class="form-control"
                                                          placeholder="Username"
                                                          v-model="username"/>
@@ -19,19 +19,30 @@
                             Incorrect username
                         </div>
                     </div>
-                    <div class="input-group mb-3"><input type="password" class="form-control"
+                    <div class="input-group mb-3"><input type="password" class="form-control" name="password"
                                                          placeholder="Password" required pattern="[\w]{6,45}"
                                                          v-model="password"/>
                         <div class="invalid-feedback">
                             Password must be 6 or more symbols long
                         </div>
                     </div>
-                    <div>
-                        <button class="btn btn-primary btn-block" v-on:click="logup">Log in</button>
+
+                    <div class="input-group mb-3"><input type="password" class="form-control" name="second_password"
+                                                         placeholder="Password again" required
+                                                         v-bind:[pattern]="password"
+                    />
+                        <div class="invalid-feedback">
+                            Passwords must be the same
+                        </div>
                     </div>
-                </div>
+                    <div>
+                        <input type="submit" class="btn btn-primary btn-block" value="Register"/>
+                    </div>
+                </form>
                 <span><a>Already have an account? <router-link to="/login">Log in</router-link></a></span>
-                <div><a>Back to <router-link to="/">Animus</router-link></a></div>
+                <div><a>Back to
+                    <router-link to="/">Animus</router-link>
+                </a></div>
                 <!-- ref to registration page-->
             </div>
             <div class="col"></div>
@@ -66,6 +77,15 @@
                     .catch(e => {
                         console.log(e)
                     })
+            },
+            checkValidityAndLogUp(e) {
+                const form = document.getElementById("logupForm")
+                if (form.checkValidity() === false) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }else {
+                this.logup()}
+                form.classList.add('was-validated');
             }
         }
     }
