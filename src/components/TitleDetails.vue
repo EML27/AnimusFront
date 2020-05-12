@@ -8,7 +8,13 @@
                     <div class="row mt-2">
                         <div class="col-3">
                             <img width="250" height="350"
-                                 v-bind:src="title.posterSource" />
+                                 v-bind:src="title.posterSource"/>
+                            <div v-if="isUserLogged" class="btn-group-toggle mt-1" data-toggle="buttons">
+                                <label v-bind:class="buttonClasses" style="width: 250px">
+                                    <input type="checkbox" checked autocomplete="off" v-model="liked"> {{likeTitle}}
+                                </label>
+                            </div>
+
                         </div>
                         <div class="col-9">
                             <h3>{{title.name}}</h3>
@@ -23,10 +29,10 @@
                 </div>
             </div>
             <div class="col-1"></div>
-            <div class="row mt-2 " style="background-color: #000000">
+            <div class="row mt-2 " style="background-color: #000000; height: 100vh">
                 <div class="col"></div>
                 <div class="col ">
-                    <iframe src="http://aniqit.com/video/32248/f073ce00a1ac0f9d09528d483cf83a73/720p" width="610"
+                    <iframe v-bind:src=title.playerUrl width="610"
                             height="370" frameborder="0" allowfullscreen class="mt-4 mb-1"></iframe>
                     <div class="dropdown">
                         <button class="btn btn-light dropdown-toggle btn-block" type="button" id="dropdownMenuButton"
@@ -55,13 +61,42 @@
         components: {Header},
         data() {
             return {
-                title: null
+                title: null,
+                liked: false,
+                likeTitle: 'Do you like it?'
+            }
+        },
+        computed: {
+            isUserLogged() {
+                return !!localStorage.token;
+            },
+
+            buttonClasses() {
+                if (this.liked) {
+                    return "btn btn-outline-danger active"
+                } else {
+                    return "btn btn-outline-danger"
+                }
+            }
+        },
+        watch: {
+            liked: function f() {
+                if (this.liked) {
+                    this.likeTitle = "Like!"
+                    api.post("/content/" + this.$route.params.kId)
+                } else {
+                    this.likeTitle = "Do you like it?"
+                    api.delete("/content/" + this.$route.params.kId)
+                }
             }
         },
         mounted() {
             api
                 .get("/content/" + this.$route.params.kId)
                 .then(response => this.title = response.data)
+            api
+                .get("/content/likes/" + this.$route.params.kId)
+                .then(response => this.liked = response.data)
         }
     }
 </script>

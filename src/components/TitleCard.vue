@@ -16,7 +16,7 @@
         props: {
             source: String,
             name: String,
-            kinopoiskId: String,
+            kinopoiskId: Number,
         }
     }
 </script>
