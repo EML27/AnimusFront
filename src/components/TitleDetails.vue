@@ -34,17 +34,6 @@
                 <div class="col ">
                     <iframe v-bind:src=title.playerUrl width="610"
                             height="370" frameborder="0" allowfullscreen class="mt-4 mb-1"></iframe>
-                    <div class="dropdown">
-                        <button class="btn btn-light dropdown-toggle btn-block" type="button" id="dropdownMenuButton"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Episode
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">1 серия</a>
-                            <a class="dropdown-item" href="#">2 серия</a>
-                            <a class="dropdown-item" href="#">3 серия</a>
-                        </div>
-                    </div>
                 </div>
                 <div class="col"></div>
             </div>

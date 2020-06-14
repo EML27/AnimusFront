@@ -4,7 +4,11 @@
             <div class="col"></div>
             <div class="col-4 wrap-login100" style="background-color: white">
                 <div class="mb-3"><h3>Hello there!</h3></div>
-                <form id="logupForm" action="/" @submit="checkValidityAndLogUp" class="mb-3 needs-validation" novalidate>
+                <form id="logupForm"
+                      action="/"
+                      @submit="checkValidityAndLogUp"
+                      class="mb-3 needs-validation"
+                      novalidate>
                     <div class="input-group mb-3"><input type="text" class="form-control"
                                                          placeholder="Username"
                                                          v-model="username"/>
@@ -16,10 +20,10 @@
                                                          placeholder="Email"
                                                          v-model="email"/>
                         <div class="invalid-feedback">
-                            Incorrect username
+                            Incorrect email
                         </div>
                     </div>
-                    <div class="input-group mb-3"><input type="password" class="form-control" name="password"
+                    <div class="input-group mb-3"><input type="password" class="form-control"
                                                          placeholder="Password" required pattern="[\w]{6,45}"
                                                          v-model="password"/>
                         <div class="invalid-feedback">
@@ -27,7 +31,7 @@
                         </div>
                     </div>
 
-                    <div class="input-group mb-3"><input type="password" class="form-control" name="second_password"
+                    <div class="input-group mb-3"><input type="password" class="form-control"
                                                          placeholder="Password again" required
                                                          v-bind:[pattern]="password"
                     />
@@ -83,8 +87,8 @@
                 if (form.checkValidity() === false) {
                     e.preventDefault();
                     e.stopPropagation();
-                }else {
-                this.logup()}
+                }
+                this.logup()
                 form.classList.add('was-validated');
             }
         }

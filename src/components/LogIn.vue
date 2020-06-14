@@ -7,7 +7,8 @@
                 <form id="loginForm"
                       action="/"
                       @submit="checkValidityAndLogIn"
-                      class="mb-3 needs-validation" novalidate> <!-- логиновая лабуда-->
+                      class="mb-3 needs-validation"
+                      novalidate> <!-- логиновая лабуда-->
                     <div class="input-group mb-3"><input type="email" class="form-control"
                                                          placeholder="Email"
                                                          v-model="email"/>
